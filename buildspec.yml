@@ -4,18 +4,18 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 123456789012.dkr.ecr.us-east-1.amazonaws.com
+      - aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 381492176503.dkr.ecr.us-west-2.amazonaws.com
   build:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - docker build --build-arg WORDPRESS_VERSION=$WORDPRESS_VERSION -t wordpress-image .
-      - docker tag wordpress-image:latest 123456789012.dkr.ecr.us-east-1.amazonaws.com/wordpress-image:latest
+      - docker build --build-arg WORDPRESS_VERSION=$WORDPRESS_VERSION -t pipeline-repo .
+      - docker tag pipeline-repo:latest 381492176503.dkr.ecr.us-west-2.amazonaws.com/pipeline-repo:latest
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
-      - docker push 123456789012.dkr.ecr.us-east-1.amazonaws.com/wordpress-image:latest
+      - docker push 381492176503.dkr.ecr.us-west-2.amazonaws.com/pipeline-repo:latest
 
 env:
   variables:
