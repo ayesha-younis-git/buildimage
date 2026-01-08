@@ -3,22 +3,19 @@ version: 0.2
 phases:
   pre_build:
     commands:
-      - echo Logging in to Amazon ECR.....
-      - aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 381492176503.dkr.ecr.us-west-2.amazonaws.com
+      - echo Logging in to Amazon ECR....
+      - aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 380404168142.dkr.ecr.us-west-2.amazonaws.com
+      - echo "WORDPRESS_VERSION is $WORDPRESS_VERSION"
       - export IMAGE_TAG="${WORDPRESS_VERSION}-$(date +%Y%m%d%H%M%S)"
       - echo "Image tag will be $IMAGE_TAG"
   build:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - docker build --build-arg WORDPRESS_VERSION=$WORDPRESS_VERSION -t pipeline-repo:$IMAGE_TAG .
-      - docker tag pipeline-repo:$IMAGE_TAG 381492176503.dkr.ecr.us-west-2.amazonaws.com/pipeline-repo:$IMAGE_TAG
+      - docker build --build-arg WORDPRESS_VERSION=$WORDPRESS_VERSION -t swm/testing-repo:$IMAGE_TAG .
+      - docker tag swm/testing-repo:$IMAGE_TAG 380404168142.dkr.ecr.us-west-2.amazonaws.com/swm/testing-repo:$IMAGE_TAG
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
-      - docker push 381492176503.dkr.ecr.us-west-2.amazonaws.com/pipeline-repo:$IMAGE_TAG
-
-env:
-  variables:
-    WORDPRESS_VERSION: "6.8.3-php8.3"
+      - docker push 380404168142.dkr.ecr.us-west-2.amazonaws.com/swm/testing-repo:$IMAGE_TAG
