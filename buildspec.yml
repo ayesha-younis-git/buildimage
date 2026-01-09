@@ -4,7 +4,7 @@ phases:
   pre_build:
     commands:
       - export DOCKER_BUILDKIT=1
-      - echo Logging in to Amazon ECR...
+      - echo Logging in to Amazon ECR....
       - aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 380404168142.dkr.ecr.us-west-2.amazonaws.com
       - echo "WORDPRESS_VERSION is $WORDPRESS_VERSION"
       - export IMAGE_TAG="${WORDPRESS_VERSION}-$(date +%Y%m%d%H%M%S)"
